@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Set a timezone
+#Set Timezone
 if [[ -z "${TZ}" ]]; then
    ln -fs /usr/share/zoneinfo/Europe/London /etc/localtime
    dpkg-reconfigure -f noninteractive tzdata
@@ -9,20 +9,16 @@ else
    dpkg-reconfigure -f noninteractive tzdata
 fi
 chmod +x /xrdp-start.sh
-
-# Format of the list of users
-# separated by newline
-# in createuser.txt
-# to be created:
-# user:pass:[Y/N]
-# Y/N = add user to sudoers?
+#CREATE USERS.
+# username:passsword:Y
+# username2:password2:Y
 
 file="/root/createusers.txt"
 if [ -f $file ]
   then
     while IFS=: read -r username password is_sudo
         do
-            echo "$username:$password:$is_sudo"
+            echo "Username: $username, Password: $password , Sudo: $is_sudo"
 
             if getent passwd $username > /dev/null 2>&1
               then
